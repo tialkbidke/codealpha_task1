@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A powerful, elegant language translation tool supporting 50+ languages with text-to-speech and copy features." />
+  <title>LinguaFlow — Language Translation Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="13" stroke="url(#grad)" stroke-width="2"/>
+            <path d="M7 10h6M10 10v8M16 10l3 8M16 10l-1 4h4" stroke="url(#grad)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="grad" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#8b5cf6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="logo-text">LinguaFlow</span>
+      </div>
+      <p class="tagline">Translate instantly across 50+ languages</p>
+    </header>
+
+    <!-- Main Translator Card -->
+    <main class="translator-card" role="main">
+
+      <!-- Language Selector Row -->
+      <div class="lang-row">
+        <!-- Source Language -->
+        <div class="lang-select-wrap">
+          <label for="source-lang" class="lang-label">From</label>
+          <div class="select-container">
+            <select id="source-lang" class="lang-select" aria-label="Source language">
+              <option value="auto">🌐 Detect Language</option>
+            </select>
+            <svg class="select-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Swap Button -->
+        <button id="swap-btn" class="swap-btn" title="Swap languages" aria-label="Swap source and target languages">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 16V4m0 0L3 8m4-4l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 8v12m0 0l4-4m-4 4l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <!-- Target Language -->
+        <div class="lang-select-wrap">
+          <label for="target-lang" class="lang-label">To</label>
+          <div class="select-container">
+            <select id="target-lang" class="lang-select" aria-label="Target language">
+            </select>
+            <svg class="select-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Translation Panels -->
+      <div class="panels-row">
+
+        <!-- Input Panel -->
+        <div class="panel panel-input">
+          <div class="panel-header">
+            <span class="panel-title" id="input-lang-name">Source Text</span>
+            <div class="panel-actions">
+              <button id="speak-input-btn" class="icon-btn" title="Listen to source text" aria-label="Speak source text" disabled>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <button id="clear-btn" class="icon-btn" title="Clear text" aria-label="Clear input text" disabled>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <textarea
+            id="input-text"
+            class="text-area"
+            placeholder="Enter text to translate…"
+            maxlength="5000"
+            aria-label="Text to translate"
+            spellcheck="true"
+          ></textarea>
+          <div class="panel-footer">
+            <span id="char-count" class="char-count">0 / 5000</span>
+            <button id="translate-btn" class="translate-btn" aria-label="Translate text">
+              <span class="btn-label">Translate</span>
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="panel panel-output">
+          <div class="panel-header">
+            <span class="panel-title" id="output-lang-name">Translation</span>
+            <div class="panel-actions">
+              <button id="speak-output-btn" class="icon-btn" title="Listen to translation" aria-label="Speak translated text" disabled>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <button id="copy-btn" class="icon-btn" title="Copy translation" aria-label="Copy translated text" disabled>
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="output-area-wrapper">
+            <div id="output-text" class="output-area" aria-live="polite" aria-label="Translated text">
+              <span class="output-placeholder">Translation will appear here…</span>
+            </div>
+            <!-- Loading Overlay -->
+            <div id="loading-overlay" class="loading-overlay" aria-hidden="true">
+              <div class="spinner"></div>
+              <span>Translating…</span>
+            </div>
+          </div>
+          <div class="panel-footer panel-footer-right">
+            <span id="detected-lang" class="detected-badge" style="display:none;"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status / Toast -->
+      <div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+
+    </main>
+
+    <!-- Quick Language Chips -->
+    <section class="quick-langs" aria-label="Quick language selection">
+      <p class="quick-langs-label">Quick select target:</p>
+      <div class="chips-row" id="chips-row">
+        <button class="chip" data-lang="es">🇪🇸 Spanish</button>
+        <button class="chip" data-lang="fr">🇫🇷 French</button>
+        <button class="chip" data-lang="de">🇩🇪 German</button>
+        <button class="chip" data-lang="hi">🇮🇳 Hindi</button>
+        <button class="chip" data-lang="ar">🇸🇦 Arabic</button>
+        <button class="chip" data-lang="zh">🇨🇳 Chinese</button>
+        <button class="chip" data-lang="ja">🇯🇵 Japanese</button>
+        <button class="chip" data-lang="ko">🇰🇷 Korean</button>
+        <button class="chip" data-lang="pt">🇧🇷 Portuguese</button>
+        <button class="chip" data-lang="ru">🇷🇺 Russian</button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>Powered by <a href="https://mymemory.translated.net/" target="_blank" rel="noopener">MyMemory Translation API</a> &bull; Built with ❤️</p>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
